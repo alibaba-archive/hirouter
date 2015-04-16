@@ -58,6 +58,7 @@
   HiRouter.prototype.parsePath = function(fragment) {
     var res = {fragment: fragment, pathName: '', search: ''};
     var index = fragment.indexOf('?');
+    index = index !== -1 ? index : fragment.length;
     res.pathName = fragment.slice(0, index);
     res.search = fragment.slice(index).replace(/#.*$/, '');
     return res;
