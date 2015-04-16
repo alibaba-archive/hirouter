@@ -1,0 +1,40 @@
+{
+  "name": "hirouter",
+  "description": "HTML5 history and router, simple, powerful and no framework.",
+  "authors": [
+    "Yan Qing <admin@zensh.com>"
+  ],
+  "version": "0.1.0",
+  "main": "dist/router.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:teambition/hirouter.git"
+  },
+  "homepage": "https://github.com/teambition/hirouter",
+  "keywords": [
+    "router",
+    "history",
+    "pushState",
+    "route"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.9.4",
+    "gulp-rimraf": "^0.1.1",
+    "gulp-sequence": "^0.3.2",
+    "through2": "^1.1.1"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "ignore": [
+    "**/.*",
+    "benchmark",
+    "test",
+    "examples",
+    "gulpfile.js",
+    "bower.json",
+    "component.json"
+  ]
+}
