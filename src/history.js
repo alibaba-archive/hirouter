@@ -27,6 +27,7 @@
   }
 
   // Modify from Backbone.History
+  // https://github.com/jashkenas/backbone
   // ----------------
   function History() {
     this.options = {

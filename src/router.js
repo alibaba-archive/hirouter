@@ -45,7 +45,8 @@
     if (matched) {
       urlObj.params = matched.params;
       matched.node.handler(urlObj);
-    } else if (this.otherwiseHandler) this.otherwiseHandler(urlObj);
+    } else if (this.otherwiseHandler)
+      this.otherwiseHandler(urlObj);
     else return false;
     return true;
   };
@@ -82,6 +83,6 @@
   HiRouter.prototype.history = new _History();
 
   HiRouter.NAME = 'HiRouter';
-  HiRouter.VERSION = 'v0.1.0';
+  HiRouter.VERSION = 'v0.1.2';
   return HiRouter;
 }));

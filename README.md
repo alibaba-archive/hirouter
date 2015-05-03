@@ -5,6 +5,8 @@ HTML5 history and router, simple, powerful and no framework.
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 
+**It is a implementation of [route-trie](https://github.com/zensh/route-trie)**
+
 ## Demo
 
 ```js
