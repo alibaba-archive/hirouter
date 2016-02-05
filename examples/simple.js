@@ -1,2 +1,1 @@
-'use strict';
-/*global module, process*/
+'use strict'

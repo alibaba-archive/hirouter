@@ -2,7 +2,7 @@
   "name": "hirouter",
   "description": "HTML5 history and router, simple, powerful and no framework.",
   "main": "dist/router.js",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "homepage": "https://github.com/teambition/hirouter",
   "authors": [
     "Yan Qing <admin@zensh.com>"

@@ -10,8 +10,8 @@ HTML5 history and router, simple, powerful and no framework.
 ## Demo
 
 ```js
-var HiRouter = require('hirouter');
-var router = new HiRouter();
+var HiRouter = require('hirouter')
+var router = new HiRouter()
 
 // define router handler:
 router
@@ -35,7 +35,7 @@ router
     // body...
   })
 // start listen
-router.start();
+router.start()
 
 // navigate to a url
 router.navigate('/organizations/xxxId')
