@@ -2,88 +2,83 @@
 //
 // **License:** MIT
 
-/* global module, define, setImmediate */
-;(function (root, factory) {
-  'use strict'
+import Trie from 'route-trie'
+import History from './history'
 
-  var HiRouter = factory(root)
-  if (typeof module === 'object' && module.exports) module.exports = HiRouter
-  else if (typeof define === 'function' && define.amd) define([], function () { return HiRouter })
-  else root.HiRouter = HiRouter
-}(typeof window === 'object' ? window : this, function (root) {
-  'use strict'
+class State {
+  constructor (fragment) {
+    let index = fragment.indexOf('?')
+    index = index !== -1 ? index : fragment.length
 
-  function HiRouter (root, options) {
-    if (!(this instanceof HiRouter)) return new HiRouter(root, options)
+    this.fragment = fragment
+    this.pathName = fragment.slice(0, index)
+    this.search = fragment.slice(index).replace(/#.*$/, '')
+    this.params = null
+  }
+}
+
+class HiRouter {
+  constructor (root, options) {
     if (typeof root !== 'string') {
       root = ''
       options = root
     }
     this.root = root.replace(/^\//, '')
-    this.trie = new _Trie()
+    this.otherwiseHandler = null
+    this.trie = new Trie()
     this.history.route(this)
   }
 
-  HiRouter.prototype.when = function (pattern, handler) {
-    var node = this.trie.define(pattern)
+  when (pattern, handler) {
+    let node = this.trie.define(pattern)
     node.handler = checkHandler(handler)
     return this
   }
 
-  HiRouter.prototype.otherwise = function (handler) {
+  otherwise (handler) {
     this.otherwiseHandler = checkHandler(handler)
     return this
   }
 
-  HiRouter.prototype.otherwiseHandler = null
-
-  HiRouter.prototype.route = function (fragment) {
+  route (fragment) {
     fragment = fragment.replace(/^\//, '')
     if (fragment.indexOf(this.root) !== 0) return false
     if (this.root.length > 1) fragment = fragment.slice(this.root.length)
-    var urlObj = this.parsePath(fragment)
-    var matched = this.trie.match(urlObj.pathName)
+    let state = this.parsePath(fragment)
+    let matched = this.trie.match(state.pathName)
     if (matched) {
-      urlObj.params = matched.params
-      matched.node.handler(urlObj)
+      state.params = matched.params
+      matched.node.handler(state)
     } else if (this.otherwiseHandler) {
-      this.otherwiseHandler(urlObj)
+      this.otherwiseHandler(state)
     } else return false
     return true
   }
 
-  HiRouter.prototype.navigate = function (fragment, options) {
+  navigate (fragment, options) {
     this.history.navigate(fragment, options)
     return this
   }
 
-  HiRouter.prototype.parsePath = function (fragment) {
-    var res = {fragment: fragment, pathName: '', search: ''}
-    var index = fragment.indexOf('?')
-    index = index !== -1 ? index : fragment.length
-    res.pathName = fragment.slice(0, index)
-    res.search = fragment.slice(index).replace(/#.*$/, '')
-    return res
+  parsePath (fragment) {
+    return new State(fragment)
   }
 
-  HiRouter.prototype.start = function (options) {
+  start (options) {
     this.history.start(options)
     return this
   }
+}
 
-  function checkHandler (handler) {
-    if (typeof handler === 'function') return handler
-    throw new Error('handler must be a function.')
-  }
+function checkHandler (handler) {
+  if (typeof handler === 'function') return handler
+  throw new Error('handler must be a function.')
+}
 
-  var _Trie = 'Trie_PLACEHOLDER'
+HiRouter.NAME = 'HiRouter'
+HiRouter.VERSION = 'v0.2.0'
+HiRouter.Trie = Trie
+HiRouter.History = History
+HiRouter.prototype.history = new History()
 
-  var _History = 'History_PLACEHOLDER'
-
-  HiRouter.History = _History
-  HiRouter.prototype.history = new _History()
-
-  HiRouter.NAME = 'HiRouter'
-  HiRouter.VERSION = 'v0.2.0'
-  return HiRouter
-}))
+export default HiRouter
